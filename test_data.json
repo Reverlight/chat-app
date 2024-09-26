@@ -1,0 +1,85 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "user1",
+            "password": "pbkdf2_sha256$870000$QTwDqyXaYqwQOAXIAVxRyF$tZvkcQUxlWjZ/lcLfobot58V6RoNAt7VW2kF2TMuens=",
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john@example.com",
+            "date_joined": "2023-09-26T12:00:00Z"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "user2",
+            "password": "pbkdf2_sha256$870000$Bucbt5H7De3lkH1bnD05Ly$zFx3IPHSQcSujO2kte6W+bFibT+5u4aBuiyhlHqX568=",
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "email": "jane@example.com",
+            "date_joined": "2023-09-26T12:05:00Z"
+        }
+    },
+    {
+        "model": "chat.thread",
+        "pk": 1,
+        "fields": {
+            "participants": [1, 2],
+            "created": "2023-09-26T12:10:00Z",
+            "updated": "2023-09-26T12:10:00Z"
+        }
+    },
+    {
+        "model": "chat.message",
+        "pk": 1,
+        "fields": {
+            "sender": 1,
+            "text": "Hey Jane, how are you doing today?",
+            "thread": 1,
+            "created": "2023-09-26T12:15:00Z",
+            "is_read": true
+        }
+    },
+    {
+        "model": "chat.message",
+        "pk": 2,
+        "fields": {
+            "sender": 2,
+            "text": "Hi John, I'm doing well! How about you?",
+            "thread": 1,
+            "created": "2023-09-26T12:16:00Z",
+            "is_read": true
+        }
+    },
+    {
+        "model": "chat.message",
+        "pk": 3,
+        "fields": {
+            "sender": 1,
+            "text": "I'm great, just been working on a project. Would love to get your thoughts on it later.",
+            "thread": 1,
+            "created": "2023-09-26T12:17:00Z",
+            "is_read": false
+        }
+    },
+    {
+        "model": "chat.message",
+        "pk": 4,
+        "fields": {
+            "sender": 2,
+            "text": "Of course! Just send it over whenever you're ready.",
+            "thread": 1,
+            "created": "2023-09-26T12:18:00Z",
+            "is_read": false
+        }
+    }
+]
