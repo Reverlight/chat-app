@@ -58,6 +58,7 @@ class ThreadListView(generics.ListAPIView):
 
 
 class ThreadDestroyView(generics.DestroyAPIView):
+    queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
     permission_classes = [IsAuthenticated, IsThreadParticipant]
 

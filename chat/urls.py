@@ -13,7 +13,7 @@ from .views import (
 urlpatterns = [
     # Threads
     path('v1/threads/', ThreadCreateView.as_view(), name='thread-create'),
-    path('v1/threads/<int:thread_id>', ThreadDestroyView.as_view(), name='thread-create'),
+    path('v1/threads/<int:pk>', ThreadDestroyView.as_view(), name='thread-create'),
     path('v1/threads/<int:thread_id>/messages', ThreadMessageListView.as_view(), name='thread-messages-get'),
     # Messages
     path('v1/messages/<int:pk>', MessageUpdateView.as_view(), name='thread-create'),
