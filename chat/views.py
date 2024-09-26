@@ -46,15 +46,15 @@ class MessageListView(generics.ListAPIView):
 
 
 class ThreadListView(generics.ListAPIView):
-    serializer_class = MessageSerializer
+    serializer_class = ThreadSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         # Retrieve messages for a specific thread
         user_id = self.kwargs['user_id']
-        if not get_object_or_404(User, user_id=user_id):
+        if not get_object_or_404(User, pk=user_id):
             raise NotFound(f'User {user_id} does not exist')
-        return Message.objects.filter(user_id=user_id)
+        return Thread.objects.filter(participants__in=[user_id])
 
 
 class ThreadDestroyView(generics.DestroyAPIView):
