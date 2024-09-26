@@ -15,5 +15,5 @@ class IsAllowedMarkMessageRead(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return (
                 obj.thread.participants.filter(pk=request.user.id)
-                and obj.user_id != request.user.id
+                and obj.sender != request.user.id
         )
