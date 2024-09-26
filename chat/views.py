@@ -39,7 +39,10 @@ class MessageListView(generics.ListAPIView):
     def get_queryset(self):
         # Retrieve unread messages for a user
         user_id = self.kwargs['user_id']
-        return Message.objects.filter(user_id=user_id, is_read=False)
+        return Message.objects.filter(
+            thread__participants__in=[user_id],
+            is_read=False
+        ).exclude(sender=user_id)
 
 
 class ThreadListView(generics.ListAPIView):
