@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from chat.models import Thread, Message
+from chat.models import Message, Thread
 
 
 class ThreadAdmin(admin.ModelAdmin):

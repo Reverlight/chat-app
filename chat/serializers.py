@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from chat.models import Thread, Message
+from chat.models import Message, Thread
 
 
 class ThreadSerializer(serializers.ModelSerializer):

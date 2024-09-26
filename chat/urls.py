@@ -1,12 +1,13 @@
 from django.urls import path
+
 from .views import (
-    ThreadCreateView,
-    ThreadMessageListView,
     MessageCreateView,
-    ThreadListView,
-    MessageUpdateView,
-    ThreadDestroyView,
     MessageListView,
+    MessageUpdateView,
+    ThreadCreateView,
+    ThreadDestroyView,
+    ThreadListView,
+    ThreadMessageListView
 )
 
 

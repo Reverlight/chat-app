@@ -1,13 +1,17 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.exceptions import NotFound, PermissionDenied
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
-from chat.models import Thread, Message
-from chat.permissions import IsThreadParticipant, IsAllowedMarkMessageRead
-from chat.serializers import ThreadSerializer, MessageSerializer, MessageUpdateSerializer
+from chat.models import Message, Thread
+from chat.permissions import IsAllowedMarkMessageRead, IsThreadParticipant
+from chat.serializers import (
+    MessageSerializer,
+    MessageUpdateSerializer,
+    ThreadSerializer
+)
 
 
 class StandardResultsSetPagination(PageNumberPagination):
