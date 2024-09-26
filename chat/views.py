@@ -2,11 +2,18 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
 from chat.models import Thread, Message
 from chat.permissions import IsThreadParticipant, IsAllowedMarkMessageRead
 from chat.serializers import ThreadSerializer, MessageSerializer, MessageUpdateSerializer
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 class ThreadCreateView(generics.CreateAPIView):
@@ -25,6 +32,7 @@ class ThreadCreateView(generics.CreateAPIView):
 class ThreadMessageListView(generics.ListAPIView):
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated, IsThreadParticipant]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         # Retrieve messages for a specific thread
@@ -35,6 +43,7 @@ class ThreadMessageListView(generics.ListAPIView):
 class MessageListView(generics.ListAPIView):
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         # Retrieve unread messages for a user
