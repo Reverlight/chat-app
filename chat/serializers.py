@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
-from chat.models import Thread
+from chat.models import Thread, Message
 
 
 class ThreadSerializer(serializers.ModelSerializer):
@@ -10,3 +11,28 @@ class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = ['id', 'participants', 'created', 'updated']
+
+    def validate_participants(self, value):
+        if len(value) != 2:
+            raise ValidationError('Currently we support only two participants')
+        return value
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    created = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Message
+        fields = ['id', 'sender', 'text', 'thread', 'created', 'is_read']
+
+
+class MessageUpdateSerializer(serializers.ModelSerializer):
+    # Only is_read is supported for update
+    created = serializers.ReadOnlyField()
+    sender = serializers.ReadOnlyField()
+    text = serializers.ReadOnlyField()
+    thread = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Message
+        fields = ['id', 'sender', 'text', 'thread', 'created', 'is_read']
