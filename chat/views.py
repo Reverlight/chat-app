@@ -17,6 +17,9 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class ThreadCreateView(generics.CreateAPIView):
+    """
+    Creates thread with participants (limited to 2)
+    """
     queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
     permission_classes = [IsAuthenticated]
@@ -30,24 +33,31 @@ class ThreadCreateView(generics.CreateAPIView):
 
 
 class ThreadMessageListView(generics.ListAPIView):
+    """
+    Retrieves messages for a specific thread
+    """
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated, IsThreadParticipant]
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        # Retrieve messages for a specific thread
         thread_id = self.kwargs['thread_id']
         return Message.objects.filter(thread_id=thread_id)
 
 
 class MessageListView(generics.ListAPIView):
+    """
+    Retrieves all unread messages for a user
+    """
     serializer_class = MessageSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        # Retrieve unread messages for a user
+        # User get unread messages for other participants, so we exclude sender user_id
         user_id = self.kwargs['user_id']
+        if user_id != self.request.user.id:
+            raise PermissionDenied('You cannot read messages of other users')
         return Message.objects.filter(
             thread__participants__in=[user_id],
             is_read=False
@@ -55,11 +65,13 @@ class MessageListView(generics.ListAPIView):
 
 
 class ThreadListView(generics.ListAPIView):
+    """
+    Retrieves all threads for a user
+    """
     serializer_class = ThreadSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Retrieve messages for a specific thread
         user_id = self.kwargs['user_id']
         if not get_object_or_404(User, pk=user_id):
             raise NotFound(f'User {user_id} does not exist')
@@ -94,6 +106,9 @@ class MessageCreateView(generics.CreateAPIView):
 
 
 class MessageUpdateView(generics.UpdateAPIView):
+    """
+        Updates message to be read
+    """
     serializer_class = MessageUpdateSerializer
     queryset = Message.objects.all()
     permission_classes = [IsAuthenticated, IsAllowedMarkMessageRead]
