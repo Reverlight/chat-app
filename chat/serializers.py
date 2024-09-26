@@ -28,11 +28,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class MessageUpdateSerializer(serializers.ModelSerializer):
     # Only is_read is supported for update
-    created = serializers.ReadOnlyField()
-    sender = serializers.ReadOnlyField()
-    text = serializers.ReadOnlyField()
-    thread = serializers.ReadOnlyField()
-
     class Meta:
         model = Message
         fields = ['id', 'sender', 'text', 'thread', 'created', 'is_read']
+        read_only_fields = ['sender', 'text', 'thread', 'created']
