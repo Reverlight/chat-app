@@ -1,10 +1,3 @@
-User 1 (John):
-Username: user1
-Password: password123
-User 2 (Jane):
-Username: user2
-Password: password456
-
 # Chat app
 ## Python django application for sending messages and managing threads
 ### Features:
